@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { cn } from "@/utils/cn";
+import ApperIcon from "@/components/ApperIcon";
 import AppointmentList from "@/components/organisms/AppointmentList";
 import AppointmentCalendar from "@/components/organisms/AppointmentCalendar";
 import Badge from "@/components/atoms/Badge";
 import Button from "@/components/atoms/Button";
 import Card from "@/components/atoms/Card";
-import ApperIcon from "@/components/atoms/ApperIcon";
 import Schedule from "@/components/pages/Schedule";
-const Appointments = ({ userRole = "patient" }) => {
-  const [view, setView] = useState("list");
-  const [filter, setFilter] = useState("all");
 
+const Appointments = ({ userRole }) => {
+  const [currentView, setCurrentView] = useState('list');
+  const [filter, setFilter] = useState('all');
   const filterOptions = [
     { value: "all", label: "All Appointments", color: "default" },
     { value: "pending", label: "Pending", color: "warning" },
@@ -33,20 +33,20 @@ const Appointments = ({ userRole = "patient" }) => {
           </p>
         </div>
         
-        <div className="flex items-center space-x-3">
+<div className="flex items-center space-x-3">
           <Button
-            variant={view === "list" ? "primary" : "secondary"}
+            variant={currentView === "list" ? "primary" : "secondary"}
             size="sm"
             icon="List"
-            onClick={() => setView("list")}
+            onClick={() => setCurrentView("list")}
           >
             List View
           </Button>
           <Button
-            variant={view === "calendar" ? "primary" : "secondary"}
+            variant={currentView === "calendar" ? "primary" : "secondary"}
             size="sm"
             icon="Calendar"
-            onClick={() => setView("calendar")}
+            onClick={() => setCurrentView("calendar")}
           >
             Calendar View
           </Button>
@@ -62,8 +62,8 @@ const Appointments = ({ userRole = "patient" }) => {
         </div>
       </div>
 
-      {/* Filters */}
-      {view === "list" && (
+{/* Filters */}
+      {currentView === "list" && (
         <div className="flex flex-wrap gap-2">
           {filterOptions.map((option) => (
             <button
@@ -82,9 +82,9 @@ const Appointments = ({ userRole = "patient" }) => {
         </div>
       )}
 
-      {/* Main Content */}
+{/* Main Content */}
       <div className="min-h-[400px]">
-        {view === "list" ? (
+        {currentView === "list" ? (
           <AppointmentList userRole={userRole} filter={filter} />
         ) : (
           <AppointmentCalendar 
