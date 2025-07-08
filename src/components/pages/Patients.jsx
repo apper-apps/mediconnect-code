@@ -81,17 +81,20 @@ const Patients = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Patients</h1>
+          <h1 className="text-2xl font-bold text-slate-900">Patient Management</h1>
           <p className="text-sm text-slate-600">
-            Manage your patients and view their medical history
+            Comprehensive patient management, medical records, and appointment scheduling
           </p>
         </div>
         
-        <div className="flex items-center space-x-3">
-          <Button variant="secondary" icon="FileText">
-            Export List
+        <div className="flex flex-wrap items-center gap-3">
+          <Button variant="outline" icon="Download" size="sm">
+            Export
+          </Button>
+          <Button variant="secondary" icon="Upload" size="sm">
+            Import
           </Button>
           <Button variant="primary" icon="UserPlus">
             Add Patient
@@ -106,54 +109,71 @@ const Patients = () => {
         showButton={false}
       />
 
-      {/* Patient Stats */}
+{/* Patient Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="p-4 bg-gradient-to-r from-blue-50 to-blue-100 border-blue-200">
+        <Card className="p-4 bg-gradient-to-r from-blue-50 to-blue-100 border-blue-200 hover:shadow-lg transition-shadow">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-blue-800">Total Patients</p>
               <p className="text-2xl font-bold text-blue-900">{patients.length}</p>
+              <p className="text-xs text-blue-600 mt-1">Registered patients</p>
             </div>
-            <div className="w-10 h-10 bg-blue-200 rounded-full flex items-center justify-center">
-              <ApperIcon name="Users" size={20} className="text-blue-700" />
+            <div className="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center">
+              <ApperIcon name="Users" size={24} className="text-blue-700" />
             </div>
           </div>
         </Card>
 
-        <Card className="p-4 bg-gradient-to-r from-green-50 to-green-100 border-green-200">
+        <Card className="p-4 bg-gradient-to-r from-green-50 to-green-100 border-green-200 hover:shadow-lg transition-shadow">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-green-800">Active Patients</p>
               <p className="text-2xl font-bold text-green-900">
                 {patients.filter(p => getPatientStats(p.Id).upcoming > 0).length}
               </p>
+              <p className="text-xs text-green-600 mt-1">With upcoming visits</p>
             </div>
-            <div className="w-10 h-10 bg-green-200 rounded-full flex items-center justify-center">
-              <ApperIcon name="UserCheck" size={20} className="text-green-700" />
+            <div className="w-12 h-12 bg-green-200 rounded-full flex items-center justify-center">
+              <ApperIcon name="UserCheck" size={24} className="text-green-700" />
             </div>
           </div>
         </Card>
 
-        <Card className="p-4 bg-gradient-to-r from-purple-50 to-purple-100 border-purple-200">
+        <Card className="p-4 bg-gradient-to-r from-purple-50 to-purple-100 border-purple-200 hover:shadow-lg transition-shadow">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-purple-800">New This Month</p>
-              <p className="text-2xl font-bold text-purple-900">8</p>
+              <p className="text-2xl font-bold text-purple-900">
+                {patients.filter(p => {
+                  const createdDate = new Date(p.createdAt);
+                  const now = new Date();
+                  return createdDate.getMonth() === now.getMonth() && createdDate.getFullYear() === now.getFullYear();
+                }).length}
+              </p>
+              <p className="text-xs text-purple-600 mt-1">Recently registered</p>
             </div>
-            <div className="w-10 h-10 bg-purple-200 rounded-full flex items-center justify-center">
-              <ApperIcon name="UserPlus" size={20} className="text-purple-700" />
+            <div className="w-12 h-12 bg-purple-200 rounded-full flex items-center justify-center">
+              <ApperIcon name="UserPlus" size={24} className="text-purple-700" />
             </div>
           </div>
         </Card>
 
-        <Card className="p-4 bg-gradient-to-r from-orange-50 to-orange-100 border-orange-200">
+        <Card className="p-4 bg-gradient-to-r from-orange-50 to-orange-100 border-orange-200 hover:shadow-lg transition-shadow">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-orange-800">Follow-ups Due</p>
-              <p className="text-2xl font-bold text-orange-900">5</p>
+              <p className="text-2xl font-bold text-orange-900">
+                {appointments.filter(apt => {
+                  const aptDate = new Date(apt.dateTime);
+                  const weekFromNow = new Date();
+                  weekFromNow.setDate(weekFromNow.getDate() + 7);
+                  return apt.status === "completed" && aptDate < weekFromNow;
+                }).length}
+              </p>
+              <p className="text-xs text-orange-600 mt-1">Need scheduling</p>
             </div>
-            <div className="w-10 h-10 bg-orange-200 rounded-full flex items-center justify-center">
-              <ApperIcon name="Clock" size={20} className="text-orange-700" />
+            <div className="w-12 h-12 bg-orange-200 rounded-full flex items-center justify-center">
+              <ApperIcon name="Clock" size={24} className="text-orange-700" />
             </div>
           </div>
         </Card>

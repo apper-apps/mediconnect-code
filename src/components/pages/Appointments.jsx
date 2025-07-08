@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { cn } from "@/utils/cn";
-import Button from "@/components/atoms/Button";
-import Badge from "@/components/atoms/Badge";
 import AppointmentList from "@/components/organisms/AppointmentList";
 import AppointmentCalendar from "@/components/organisms/AppointmentCalendar";
-
+import Badge from "@/components/atoms/Badge";
+import Button from "@/components/atoms/Button";
+import Card from "@/components/atoms/Card";
+import ApperIcon from "@/components/atoms/ApperIcon";
+import Schedule from "@/components/pages/Schedule";
 const Appointments = ({ userRole = "patient" }) => {
   const [view, setView] = useState("list");
   const [filter, setFilter] = useState("all");
@@ -21,11 +23,11 @@ const Appointments = ({ userRole = "patient" }) => {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
+<div>
           <h1 className="text-2xl font-bold text-slate-900">Appointments</h1>
           <p className="text-sm text-slate-600">
             {userRole === "doctor" 
-              ? "Manage your patient appointments and schedule" 
+              ? "Manage patient appointments, approvals, and scheduling workflow" 
               : "View and manage your medical appointments"
             }
           </p>
@@ -48,9 +50,13 @@ const Appointments = ({ userRole = "patient" }) => {
           >
             Calendar View
           </Button>
-          {userRole === "patient" && (
+{userRole === "patient" ? (
             <Button variant="primary" icon="Plus">
-              New Appointment
+              Book Appointment
+            </Button>
+          ) : (
+            <Button variant="primary" icon="Calendar">
+              Schedule Patient
             </Button>
           )}
         </div>
@@ -89,20 +95,34 @@ const Appointments = ({ userRole = "patient" }) => {
         )}
       </div>
 
-      {/* Stats Summary */}
+{/* Stats Summary */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
         {filterOptions.slice(1).map((option) => (
-          <div key={option.value} className="bg-white rounded-lg border border-slate-200 p-4">
+          <Card key={option.value} className="p-4 hover:shadow-lg transition-shadow">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-slate-600">{option.label}</p>
-                <p className="text-2xl font-bold text-slate-900">0</p>
+                <p className="text-2xl font-bold text-slate-900">
+                  {userRole === "doctor" ? 
+                    (option.value === "pending" ? "8" : 
+                     option.value === "approved" ? "12" : 
+                     option.value === "completed" ? "156" : "3") : "0"}
+                </p>
+                <p className="text-xs text-slate-500 mt-1">
+                  {userRole === "doctor" ? "Total managed" : "Your appointments"}
+                </p>
               </div>
-              <Badge variant={option.color} className="ml-2">
-                {option.label}
-              </Badge>
+              <div className="w-10 h-10 rounded-full flex items-center justify-center bg-slate-100">
+                <ApperIcon 
+                  name={option.value === "pending" ? "Clock" : 
+                        option.value === "approved" ? "CheckCircle" : 
+                        option.value === "completed" ? "Check" : "X"} 
+                  size={20} 
+                  className="text-slate-600" 
+                />
+              </div>
             </div>
-          </div>
+          </Card>
         ))}
       </div>
     </div>

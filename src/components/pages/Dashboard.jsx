@@ -152,24 +152,43 @@ const Dashboard = ({ userRole = "patient" }) => {
     );
   }
 
-  return (
+return (
     <div className="space-y-6">
       {/* Welcome Section */}
       <Card className="p-6 bg-gradient-to-r from-primary-50 to-primary-100 border-primary-200">
-        <div className="flex items-center justify-between">
-          <div>
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div className="flex-1">
             <h1 className="text-2xl font-bold text-primary-900 mb-2">
-              Welcome back, {userRole === "doctor" ? "Dr. Johnson" : "John"}!
+              Welcome back, {userRole === "doctor" ? "Dr. Sarah Johnson" : "John"}!
             </h1>
-            <p className="text-primary-700">
+            <p className="text-primary-700 mb-4">
               {userRole === "doctor" 
-                ? `You have ${todayAppointments.length} appointments today`
+                ? `You have ${todayAppointments.length} appointments scheduled for today`
                 : `You have ${upcomingAppointments.length} upcoming appointments`
               }
             </p>
+            {userRole === "doctor" && (
+              <div className="text-sm text-primary-600">
+                Internal Medicine • MediConnect Health Center
+              </div>
+            )}
           </div>
-          <div className="w-16 h-16 bg-primary-600 rounded-full flex items-center justify-center">
-            <ApperIcon name="Heart" size={24} className="text-white" />
+          <div className="flex items-center space-x-4">
+            <div className="w-16 h-16 bg-primary-600 rounded-full flex items-center justify-center">
+              <ApperIcon name="Heart" size={24} className="text-white" />
+            </div>
+            {userRole === "doctor" && (
+              <div className="text-right">
+                <p className="text-sm font-medium text-primary-800">Today's Status</p>
+                <p className="text-lg font-bold text-primary-900">
+                  {new Date().toLocaleDateString('en-US', { 
+                    weekday: 'long', 
+                    month: 'short', 
+                    day: 'numeric' 
+                  })}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </Card>
@@ -217,7 +236,7 @@ const Dashboard = ({ userRole = "patient" }) => {
           </div>
         </Card>
 
-        {/* Quick Actions & Recent Activity */}
+{/* Quick Actions & Recent Activity */}
         <div className="space-y-6">
           {/* Quick Actions */}
           <Card className="p-6">
@@ -226,13 +245,16 @@ const Dashboard = ({ userRole = "patient" }) => {
               {userRole === "doctor" ? (
                 <>
                   <Button variant="primary" className="w-full" icon="Plus">
-                    New Appointment
+                    Schedule Appointment
                   </Button>
                   <Button variant="secondary" className="w-full" icon="Pill">
-                    Create Prescription
+                    New Prescription
                   </Button>
                   <Button variant="outline" className="w-full" icon="Users">
-                    View Patients
+                    Patient Records
+                  </Button>
+                  <Button variant="ghost" className="w-full" icon="Clock">
+                    Manage Schedule
                   </Button>
                 </>
               ) : (
