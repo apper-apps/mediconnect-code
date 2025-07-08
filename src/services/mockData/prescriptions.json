@@ -1,0 +1,152 @@
+[
+  {
+    "Id": 1,
+    "appointmentId": 1,
+    "patientId": 1,
+    "patientName": "John Doe",
+    "doctorId": 1,
+    "doctorName": "Dr. Sarah Johnson",
+    "templateUsed": "Hypertension",
+    "medications": [
+      {
+        "name": "Lisinopril",
+        "dosage": "10mg",
+        "frequency": "Once daily",
+        "duration": "30 days"
+      },
+      {
+        "name": "Hydrochlorothiazide",
+        "dosage": "25mg",
+        "frequency": "Once daily",
+        "duration": "30 days"
+      }
+    ],
+    "instructions": "Take with food. Monitor blood pressure daily. Return in 2 weeks for follow-up.",
+    "createdAt": "2024-01-10T10:30:00.000Z"
+  },
+  {
+    "Id": 2,
+    "appointmentId": 2,
+    "patientId": 2,
+    "patientName": "Jane Smith",
+    "doctorId": 1,
+    "doctorName": "Dr. Sarah Johnson",
+    "templateUsed": "Diabetes",
+    "medications": [
+      {
+        "name": "Metformin",
+        "dosage": "500mg",
+        "frequency": "Twice daily",
+        "duration": "30 days"
+      },
+      {
+        "name": "Glipizide",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days"
+      }
+    ],
+    "instructions": "Take with meals. Monitor blood sugar levels twice daily. Maintain low-carb diet.",
+    "createdAt": "2024-01-12T15:20:00.000Z"
+  },
+  {
+    "Id": 3,
+    "appointmentId": 3,
+    "patientId": 3,
+    "patientName": "Michael Brown",
+    "doctorId": 1,
+    "doctorName": "Dr. Sarah Johnson",
+    "templateUsed": "Cold & Flu",
+    "medications": [
+      {
+        "name": "Paracetamol",
+        "dosage": "500mg",
+        "frequency": "Every 6 hours",
+        "duration": "5 days"
+      },
+      {
+        "name": "Cough Syrup",
+        "dosage": "10ml",
+        "frequency": "Three times daily",
+        "duration": "7 days"
+      }
+    ],
+    "instructions": "Rest and drink plenty of fluids. Use humidifier if needed. Return if symptoms worsen.",
+    "createdAt": "2024-01-08T11:45:00.000Z"
+  },
+  {
+    "Id": 4,
+    "appointmentId": 4,
+    "patientId": 4,
+    "patientName": "Emily Davis",
+    "doctorId": 1,
+    "doctorName": "Dr. Sarah Johnson",
+    "templateUsed": "Antibiotics",
+    "medications": [
+      {
+        "name": "Amoxicillin",
+        "dosage": "500mg",
+        "frequency": "Three times daily",
+        "duration": "7 days"
+      },
+      {
+        "name": "Probiotics",
+        "dosage": "1 capsule",
+        "frequency": "Once daily",
+        "duration": "14 days"
+      }
+    ],
+    "instructions": "Complete the full course of antibiotics. Take probiotics to maintain gut health.",
+    "createdAt": "2024-01-13T14:10:00.000Z"
+  },
+  {
+    "Id": 5,
+    "appointmentId": 8,
+    "patientId": 7,
+    "patientName": "Robert Taylor",
+    "doctorId": 1,
+    "doctorName": "Dr. Sarah Johnson",
+    "templateUsed": "Pain Relief",
+    "medications": [
+      {
+        "name": "Ibuprofen",
+        "dosage": "400mg",
+        "frequency": "Three times daily",
+        "duration": "5 days"
+      },
+      {
+        "name": "Alprazolam",
+        "dosage": "0.25mg",
+        "frequency": "As needed",
+        "duration": "10 days"
+      }
+    ],
+    "instructions": "Take ibuprofen with food. Use alprazolam only for severe anxiety. Follow up with counselor.",
+    "createdAt": "2024-01-09T16:30:00.000Z"
+  },
+  {
+    "Id": 6,
+    "appointmentId": 1,
+    "patientId": 1,
+    "patientName": "John Doe",
+    "doctorId": 1,
+    "doctorName": "Dr. Sarah Johnson",
+    "templateUsed": "Custom",
+    "medications": [
+      {
+        "name": "Vitamin D3",
+        "dosage": "2000 IU",
+        "frequency": "Once daily",
+        "duration": "30 days"
+      },
+      {
+        "name": "Omega-3",
+        "dosage": "1000mg",
+        "frequency": "Once daily",
+        "duration": "30 days"
+      }
+    ],
+    "instructions": "Take with food for better absorption. Continue healthy diet and exercise routine.",
+    "createdAt": "2024-01-15T09:15:00.000Z"
+  }
+]

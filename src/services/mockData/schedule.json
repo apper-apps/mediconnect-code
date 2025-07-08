@@ -1,0 +1,65 @@
+[
+  {
+    "Id": 1,
+    "day": "monday",
+    "dayLabel": "Monday",
+    "isAvailable": true,
+    "startTime": "09:00",
+    "endTime": "17:00",
+    "timeSlots": ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30"]
+  },
+  {
+    "Id": 2,
+    "day": "tuesday",
+    "dayLabel": "Tuesday",
+    "isAvailable": true,
+    "startTime": "09:00",
+    "endTime": "17:00",
+    "timeSlots": ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30"]
+  },
+  {
+    "Id": 3,
+    "day": "wednesday",
+    "dayLabel": "Wednesday",
+    "isAvailable": true,
+    "startTime": "09:00",
+    "endTime": "17:00",
+    "timeSlots": ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30"]
+  },
+  {
+    "Id": 4,
+    "day": "thursday",
+    "dayLabel": "Thursday",
+    "isAvailable": true,
+    "startTime": "09:00",
+    "endTime": "17:00",
+    "timeSlots": ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30"]
+  },
+  {
+    "Id": 5,
+    "day": "friday",
+    "dayLabel": "Friday",
+    "isAvailable": true,
+    "startTime": "09:00",
+    "endTime": "17:00",
+    "timeSlots": ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30"]
+  },
+  {
+    "Id": 6,
+    "day": "saturday",
+    "dayLabel": "Saturday",
+    "isAvailable": false,
+    "startTime": "09:00",
+    "endTime": "13:00",
+    "timeSlots": []
+  },
+  {
+    "Id": 7,
+    "day": "sunday",
+    "dayLabel": "Sunday",
+    "isAvailable": false,
+    "startTime": "09:00",
+    "endTime": "13:00",
+    "timeSlots": []
+  }
+]

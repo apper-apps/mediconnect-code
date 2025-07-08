@@ -1,0 +1,112 @@
+[
+  {
+    "Id": 1,
+    "patientId": 1,
+    "patientName": "John Doe",
+    "fileName": "Blood_Test_Results_Jan_2024.pdf",
+    "fileType": "application/pdf",
+    "category": "lab_results",
+    "uploadDate": "2024-01-10T09:30:00.000Z",
+    "size": 245760,
+    "description": "Complete blood count and lipid panel results"
+  },
+  {
+    "Id": 2,
+    "patientId": 1,
+    "patientName": "John Doe",
+    "fileName": "Prescription_Hypertension_Jan_2024.pdf",
+    "fileType": "application/pdf",
+    "category": "prescriptions",
+    "uploadDate": "2024-01-10T10:45:00.000Z",
+    "size": 156432,
+    "description": "Blood pressure medication prescription"
+  },
+  {
+    "Id": 3,
+    "patientId": 2,
+    "patientName": "Jane Smith",
+    "fileName": "Diabetes_Management_Report.pdf",
+    "fileType": "application/pdf",
+    "category": "reports",
+    "uploadDate": "2024-01-12T14:20:00.000Z",
+    "size": 312845,
+    "description": "Comprehensive diabetes management report"
+  },
+  {
+    "Id": 4,
+    "patientId": 3,
+    "patientName": "Michael Brown",
+    "fileName": "Chest_X_Ray_Jan_2024.jpg",
+    "fileType": "image/jpeg",
+    "category": "images",
+    "uploadDate": "2024-01-08T11:15:00.000Z",
+    "size": 1048576,
+    "description": "Chest X-ray for cold and flu symptoms"
+  },
+  {
+    "Id": 5,
+    "patientId": 4,
+    "patientName": "Emily Davis",
+    "fileName": "Allergy_Test_Results.pdf",
+    "fileType": "application/pdf",
+    "category": "lab_results",
+    "uploadDate": "2024-01-13T16:30:00.000Z",
+    "size": 198765,
+    "description": "Comprehensive allergy panel results"
+  },
+  {
+    "Id": 6,
+    "patientId": 5,
+    "patientName": "David Wilson",
+    "fileName": "Dermatology_Photos.jpg",
+    "fileType": "image/jpeg",
+    "category": "images",
+    "uploadDate": "2024-01-11T13:45:00.000Z",
+    "size": 892134,
+    "description": "Skin condition documentation photos"
+  },
+  {
+    "Id": 7,
+    "patientId": 6,
+    "patientName": "Sarah Lee",
+    "fileName": "Vaccination_Record.pdf",
+    "fileType": "application/pdf",
+    "category": "other",
+    "uploadDate": "2024-01-15T11:20:00.000Z",
+    "size": 134567,
+    "description": "Complete vaccination history record"
+  },
+  {
+    "Id": 8,
+    "patientId": 7,
+    "patientName": "Robert Taylor",
+    "fileName": "EKG_Results_Jan_2024.pdf",
+    "fileType": "application/pdf",
+    "category": "reports",
+    "uploadDate": "2024-01-09T15:10:00.000Z",
+    "size": 278934,
+    "description": "Electrocardiogram results for chest pain evaluation"
+  },
+  {
+    "Id": 9,
+    "patientId": 1,
+    "patientName": "John Doe",
+    "fileName": "Insurance_Information.pdf",
+    "fileType": "application/pdf",
+    "category": "other",
+    "uploadDate": "2024-01-05T08:30:00.000Z",
+    "size": 87654,
+    "description": "Updated insurance card and policy information"
+  },
+  {
+    "Id": 10,
+    "patientId": 2,
+    "patientName": "Jane Smith",
+    "fileName": "Glucose_Monitor_Data.csv",
+    "fileType": "text/csv",
+    "category": "lab_results",
+    "uploadDate": "2024-01-14T12:00:00.000Z",
+    "size": 45321,
+    "description": "Daily glucose monitoring data for past month"
+  }
+]
