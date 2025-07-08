@@ -7,43 +7,68 @@ import Card from "@/components/atoms/Card";
 import ApperIcon from "@/components/ApperIcon";
 import { appointmentService } from "@/services/api/appointmentService";
 import { prescriptionService } from "@/services/api/prescriptionService";
+import { patientService } from "@/services/api/patientService";
 import { format } from "date-fns";
-
 const Dashboard = ({ userRole = "patient" }) => {
   const [appointments, setAppointments] = useState([]);
   const [prescriptions, setPrescriptions] = useState([]);
+  const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
     totalAppointments: 0,
     pendingAppointments: 0,
     completedAppointments: 0,
     totalPrescriptions: 0,
+    totalPatients: 0,
+    todayAppointments: 0,
   });
 
   useEffect(() => {
     loadDashboardData();
-  }, []);
+  }, [userRole]);
 
-  const loadDashboardData = async () => {
+const loadDashboardData = async () => {
     try {
       setLoading(true);
-      const [appointmentsData, prescriptionsData] = await Promise.all([
+      
+      // Load different data based on user role
+      const dataPromises = [
         appointmentService.getAll(),
         prescriptionService.getAll()
-      ]);
+      ];
+      
+      // Add patient data for doctors
+      if (userRole === "doctor") {
+        dataPromises.push(patientService.getAll());
+      }
+      
+      const results = await Promise.all(dataPromises);
+      const [appointmentsData, prescriptionsData, patientsData] = results;
 
       setAppointments(appointmentsData);
       setPrescriptions(prescriptionsData);
+      if (patientsData) {
+        setPatients(patientsData);
+      }
 
-      // Calculate stats
+      // Calculate stats based on user role
       const pendingCount = appointmentsData.filter(apt => apt.status === "pending").length;
       const completedCount = appointmentsData.filter(apt => apt.status === "completed").length;
+      
+      // Calculate today's appointments
+      const today = new Date();
+      const todayCount = appointmentsData.filter(apt => {
+        const appointmentDate = new Date(apt.dateTime);
+        return appointmentDate.toDateString() === today.toDateString();
+      }).length;
 
       setStats({
         totalAppointments: appointmentsData.length,
         pendingAppointments: pendingCount,
         completedAppointments: completedCount,
         totalPrescriptions: prescriptionsData.length,
+        totalPatients: patientsData ? patientsData.length : 0,
+        todayAppointments: todayCount,
       });
     } catch (err) {
       console.error("Failed to load dashboard data:", err);
@@ -99,13 +124,21 @@ const Dashboard = ({ userRole = "patient" }) => {
     },
   ];
 
-  const doctorStats = [
+const doctorStats = [
     {
       title: "Today's Appointments",
-      value: todayAppointments.length,
+      value: stats.todayAppointments,
       icon: "Calendar",
       color: "primary",
       trend: "neutral",
+    },
+    {
+      title: "Total Patients",
+      value: stats.totalPatients,
+      icon: "Users", 
+      color: "success",
+      trend: "up",
+      trendValue: "+5%",
     },
     {
       title: "Pending Approvals",
@@ -113,14 +146,6 @@ const Dashboard = ({ userRole = "patient" }) => {
       icon: "Clock",
       color: "warning",
       trend: "neutral",
-    },
-    {
-      title: "Patients Seen",
-      value: stats.completedAppointments,
-      icon: "Users",
-      color: "success",
-      trend: "up",
-      trendValue: "+8%",
     },
     {
       title: "Prescriptions Issued",
@@ -155,40 +180,51 @@ const Dashboard = ({ userRole = "patient" }) => {
 return (
     <div className="space-y-6">
       {/* Welcome Section */}
-      <Card className="p-6 bg-gradient-to-r from-primary-50 to-primary-100 border-primary-200">
+<Card className="p-6 bg-gradient-to-r from-primary-50 to-primary-100 border-primary-200">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div className="flex-1">
             <h1 className="text-2xl font-bold text-primary-900 mb-2">
-              Welcome back, {userRole === "doctor" ? "Dr. Sarah Johnson" : "John"}!
+              Welcome back, {userRole === "doctor" ? "Dr. Sarah Johnson" : "John Smith"}!
             </h1>
             <p className="text-primary-700 mb-4">
               {userRole === "doctor" 
-                ? `You have ${todayAppointments.length} appointments scheduled for today`
-                : `You have ${upcomingAppointments.length} upcoming appointments`
+                ? `You have ${stats.todayAppointments} appointments scheduled for today and ${stats.totalPatients} patients under your care`
+                : `You have ${upcomingAppointments.length} upcoming appointments and ${stats.totalPrescriptions} active prescriptions`
               }
             </p>
-            {userRole === "doctor" && (
+            {userRole === "doctor" ? (
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-sm text-primary-600">
+                <span className="font-medium">Internal Medicine</span>
+                <span className="hidden sm:inline">•</span>
+                <span>MediConnect Health Center</span>
+                <span className="hidden sm:inline">•</span>
+                <span>License #MD-2024-1234</span>
+              </div>
+            ) : (
               <div className="text-sm text-primary-600">
-                Internal Medicine • MediConnect Health Center
+                Patient ID: PT-2024-5678 • Next appointment: {upcomingAppointments.length > 0 ? format(new Date(upcomingAppointments[0].dateTime), "MMM dd, yyyy") : "None scheduled"}
               </div>
             )}
           </div>
           <div className="flex items-center space-x-4">
             <div className="w-16 h-16 bg-primary-600 rounded-full flex items-center justify-center">
-              <ApperIcon name="Heart" size={24} className="text-white" />
+              <ApperIcon name={userRole === "doctor" ? "Stethoscope" : "Heart"} size={24} className="text-white" />
             </div>
-            {userRole === "doctor" && (
-              <div className="text-right">
-                <p className="text-sm font-medium text-primary-800">Today's Status</p>
-                <p className="text-lg font-bold text-primary-900">
-                  {new Date().toLocaleDateString('en-US', { 
-                    weekday: 'long', 
-                    month: 'short', 
-                    day: 'numeric' 
-                  })}
-                </p>
-              </div>
-            )}
+            <div className="text-right">
+              <p className="text-sm font-medium text-primary-800">
+                {userRole === "doctor" ? "Today's Schedule" : "Health Status"}
+              </p>
+              <p className="text-lg font-bold text-primary-900">
+                {userRole === "doctor" 
+                  ? new Date().toLocaleDateString('en-US', { 
+                      weekday: 'long', 
+                      month: 'short', 
+                      day: 'numeric' 
+                    })
+                  : "Good"
+                }
+              </p>
+            </div>
           </div>
         </div>
       </Card>
@@ -241,20 +277,23 @@ return (
           {/* Quick Actions */}
           <Card className="p-6">
             <h3 className="text-lg font-semibold text-slate-900 mb-4">Quick Actions</h3>
-            <div className="space-y-3">
+<div className="space-y-3">
               {userRole === "doctor" ? (
                 <>
                   <Button variant="primary" className="w-full" icon="Plus">
-                    Schedule Appointment
+                    New Appointment
                   </Button>
                   <Button variant="secondary" className="w-full" icon="Pill">
-                    New Prescription
+                    Create Prescription
                   </Button>
                   <Button variant="outline" className="w-full" icon="Users">
-                    Patient Records
+                    Manage Patients
                   </Button>
-                  <Button variant="ghost" className="w-full" icon="Clock">
-                    Manage Schedule
+                  <Button variant="outline" className="w-full" icon="Clock">
+                    Schedule Management
+                  </Button>
+                  <Button variant="ghost" className="w-full" icon="FileText">
+                    Medical Records
                   </Button>
                 </>
               ) : (
@@ -263,10 +302,13 @@ return (
                     Book Appointment
                   </Button>
                   <Button variant="secondary" className="w-full" icon="Upload">
-                    Upload Files
+                    Upload Medical Files
                   </Button>
                   <Button variant="outline" className="w-full" icon="Pill">
                     View Prescriptions
+                  </Button>
+                  <Button variant="ghost" className="w-full" icon="User">
+                    Update Profile
                   </Button>
                 </>
               )}
